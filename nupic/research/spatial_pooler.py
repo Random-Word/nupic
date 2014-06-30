@@ -1549,6 +1549,14 @@ class SpatialPooler(object):
     else:
       self._random = NupicRandom()
 
+  def encodedConfidences(self, columnConfidences):
+      encodedValue = np.zeros(self._inputDimensions)
+      for x in nonzero(columnConfidences):
+          cs = np.zeros(self._numInputs)
+          self.getConnectedSynapses(x, cs)
+          encodedValue += np.reshape(cs, encodedValue.shape)
+      return encodedValue
+
 
   def printParameters(self):
     """
